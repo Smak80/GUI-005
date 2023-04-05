@@ -1,4 +1,6 @@
 import java.awt.Dimension
+import java.awt.event.KeyAdapter
+import java.awt.event.KeyEvent
 import javax.swing.GroupLayout
 import javax.swing.JButton
 import javax.swing.JFrame
@@ -19,6 +21,17 @@ class MainFrame : JFrame() {
         defaultCloseOperation = EXIT_ON_CLOSE
         minimumSize = minSize
         size = minSize
+        taChat.isEditable = false
+        btnSend.addActionListener {
+            taChat.text += tfMessage.text + "\n"
+            tfMessage.text = ""
+        }
+        tfMessage.addKeyListener(object : KeyAdapter(){
+            override fun keyTyped(e: KeyEvent?) {
+                if (e?.keyChar == '\n')
+                    btnSend.doClick()
+            }
+        })
         layout = GroupLayout(contentPane).apply {
             setVerticalGroup(
                 createSequentialGroup()
